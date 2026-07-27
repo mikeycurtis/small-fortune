@@ -1,0 +1,86 @@
+Small Fortune — third-party data notices
+========================================
+
+The MIT licence in LICENSE covers the software. The curated price data under
+`src/data/baskets/` is a separate work with the terms below. If you reuse that
+data, these attributions travel with it.
+
+Each item in a basket records where its price came from, in its `source`
+field, so the obligations below can be traced per row rather than assumed
+across the whole dataset.
+
+
+1. Curated baskets — original compilation
+-----------------------------------------
+Rows marked `source: "local-survey"` and `source: "operator-published"` are an
+original compilation, hand-assembled for this project from menus, public
+listings, operator fare tables, national statistics releases and news
+reporting. Individual prices are facts and are not themselves copyrightable;
+the selection and arrangement are this project's own work.
+
+Some baskets are marked `estimated: true`, meaning their absolute price levels
+were derived from verified exchange-rate anchors and domain knowledge rather
+than sourced local prices. They are indicative and are surfaced as such in the
+interface. Do not present them as surveyed figures.
+
+
+2. The Big Mac Index — CC BY 4.0
+--------------------------------
+Rows marked `source: "economist-bmi"` are derived from The Economist's Big Mac
+Index.
+
+    Source:  https://github.com/TheEconomist/big-mac-data
+    Licence: Creative Commons Attribution 4.0 International (CC BY 4.0)
+             https://creativecommons.org/licenses/by/4.0/
+    Credit:  The Economist
+
+Reuse requires attribution to The Economist and an indication of whether
+changes were made. Values here are taken as published, in local currency, from
+the index release named in the accompanying commentary.
+
+
+3. WFP food prices via HDX — CC BY 3.0 IGO
+------------------------------------------
+The `wfp-hdx` source is declared and available for staple-food rows.
+
+    Source:  https://data.humdata.org/dataset/global-wfp-food-prices
+    Licence: Creative Commons Attribution 3.0 IGO (CC BY 3.0 IGO)
+             https://creativecommons.org/licenses/by/3.0/igo/
+    Credit:  World Food Programme
+
+No item currently draws on this dataset — HDX was unreachable when the baskets
+were built. This notice is kept in place so the obligation is already recorded
+if and when those rows are sourced.
+
+
+4. Exchange rates — attribution required
+----------------------------------------
+Live rates come from ExchangeRate-API's open-access endpoint, whose terms
+require visible attribution. A credit link appears in the site footer; keep it
+if you deploy this.
+
+    Provider: https://www.exchangerate-api.com
+    Terms:    https://www.exchangerate-api.com/terms
+
+A fallback provider is used when the primary is unreachable:
+
+    Provider: https://github.com/fawazahmed0/exchange-api
+
+
+5. Deliberately not used
+------------------------
+Numbeo is not a source for any row, at any tier. Its terms prohibit automated
+collection, its free tier does not cover a public product, and a paid licence
+still forbids redistributing the data through a public-facing feed.
+
+Widely-mirrored "global cost of living" datasets labelled CC0 on data-sharing
+sites are, in the cases reviewed, Numbeo scrapes relabelled by uploaders with
+no standing to relicense them. That badge is not clearance. None were used
+here, and none should be merged into this dataset.
+
+
+6. Fonts
+--------
+Cormorant Garamond and Jost are served via next/font from Google Fonts, both
+under the SIL Open Font License 1.1. They are not redistributed in this
+repository.

@@ -722,6 +722,13 @@ silently and a reader notices immediately.
 
 ## Licence
 
-Code under MIT. Curated price data is an original compilation; Big Mac Index rows are
-CC BY 4.0 (The Economist) and WFP rows CC BY 3.0 IGO (World Food Programme), noted
-per item via `source`.
+**Software: MIT** — see [`LICENSE`](LICENSE).
+
+**Data: separate terms** — see [`NOTICE`](NOTICE). The curated baskets are an original
+compilation, but individual rows carry obligations that travel with them: Big Mac Index
+rows are CC BY 4.0 (The Economist), WFP rows CC BY 3.0 IGO (World Food Programme), and
+ExchangeRate-API requires visible attribution, which the footer provides. Every item
+records its `source`, so those obligations can be traced per row rather than assumed
+across the whole dataset.
+
+If you deploy this, keep the rates credit in the footer.
