@@ -1,26 +1,161 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Design tokens — "neoclassical ledger".
+   Alabaster ground, olive and oxblood, classical letterforms.
+   Restraint is the point: two accents, thin rules, generous
+   letterspacing, no ornament that isn't structural.
+   ============================================================ */
+
+@theme {
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* Ground & ink ----------------------------------------------- */
+  --color-paper: #f2eee4;
+  --color-paper-raised: #faf7ef;
+  --color-paper-sunk: #e9e3d5;
+  --color-ink: #1b1c15;
+  --color-ink-soft: #4d4e3f;
+  --color-ink-faint: #8b8a76;
+  --color-rule: #cfc8b6;
+
+  /* Two accents, and only two ---------------------------------- */
+  --color-olive: #5c6539;
+  --color-oxblood: #77202b;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark: olive-black, as if the parchment were read by lamplight. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+[data-theme="dark"] {
+  --color-paper: #12140e;
+  --color-paper-raised: #1c1f16;
+  --color-paper-sunk: #0c0e08;
+  --color-ink: #ece7d9;
+  --color-ink-soft: #b3af9f;
+  --color-ink-faint: #7d7b6c;
+  --color-rule: #343829;
+  --color-olive: #a3af79;
+  /* Lightened for contrast on the dark ground, but pushed toward brick
+     rather than rose — a lightened wine turns pink, which is the wrong
+     register entirely. This is closer to a Pompeian red. */
+  --color-oxblood: #c96a5f;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Figures must never reflow as they change. */
+  .tnum {
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  ::selection {
+    background-color: var(--color-olive);
+    color: var(--color-paper-raised);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-olive);
+    outline-offset: 3px;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Letterspaced small caps — the label voice throughout.
+     Classical inscriptions have no lowercase; neither do these. */
+  .inscribed {
+    font-family: var(--font-sans);
+    /* 11px: Cormorant sets small for its point size, so the whole scale
+       runs a step larger than a grotesque would need. */
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  /* Letterpress double rule: two hairlines with air between.
+     The one piece of ornament, and it earns its place by
+     separating sections without adding a box. */
+  .rule-double {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
+    box-shadow: 0 3px 0 -2px var(--color-rule);
+  }
+
+  /* A meander — the Greek key, as a square wave, since the true
+     interlocking form turns to mud at this size. Currently unused: once
+     the layout tightened it read as clutter between the question and the
+     answer. Kept for a future header or divider. */
+  .meander {
+    height: 9px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 8V1h8v6h8V1' fill='none' stroke='%235c6539' stroke-width='1.25'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    opacity: 0.4;
+  }
+
+  [data-theme="dark"] .meander {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 8V1h8v6h8V1' fill='none' stroke='%23a3af79' stroke-width='1.25'/%3E%3C/svg%3E");
+    opacity: 0.35;
+  }
+
+  /* Dotted leader between an item and its count, as an index sets it. */
+  .leader {
+    flex: 1 1 auto;
+    min-width: 1.25rem;
+    align-self: end;
+    margin-bottom: 0.34em;
+    border-bottom: 1px dotted var(--color-rule);
+  }
+}
+
+@layer utilities {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .rise {
+    animation: rise 0.6s var(--ease-out-expo) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
