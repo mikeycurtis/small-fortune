@@ -35,6 +35,9 @@ export const metadata: Metadata = {
       "Convert any currency into the real things it buys. Every sum is a small fortune somewhere.",
     siteName: "Small Fortune",
     type: "website",
+    // Placeholder: this is the square app icon, which link previews will
+    // letterbox. Replace with a dedicated 1200x630 when one exists.
+    images: [{ url: "/mark.png", width: 128, height: 128 }],
   },
 };
 

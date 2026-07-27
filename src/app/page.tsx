@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import { Converter } from "@/components/converter";
 import { RateError } from "@/components/rate-error";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -93,13 +94,25 @@ function Header() {
       className="rise flex items-baseline justify-between gap-6 py-6"
       style={{ "--i": 0 } as React.CSSProperties}
     >
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <p className="font-display text-[22px] font-medium uppercase tracking-[0.2em] text-ink">
-          Small Fortune
-        </p>
-        <p className="font-display text-[17px] italic text-ink-faint">
-          your money, translated
-        </p>
+      <div className="flex items-center gap-3.5">
+        {/* Decorative: the wordmark beside it already names the product. */}
+        <Image
+          src="/mark.png"
+          alt=""
+          aria-hidden
+          width={128}
+          height={128}
+          priority
+          className="size-9 shrink-0 rounded-[3px]"
+        />
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <p className="font-display text-[22px] font-medium uppercase tracking-[0.2em] text-ink">
+            Small Fortune
+          </p>
+          <p className="font-display text-[17px] italic text-ink-faint">
+            your money, translated
+          </p>
+        </div>
       </div>
       <ThemeToggle />
     </header>
