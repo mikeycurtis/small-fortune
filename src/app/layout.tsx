@@ -21,8 +21,26 @@ const jost = Jost({
   display: "swap",
 });
 
+/**
+ * Absolute URLs in metadata (og:image especially) are resolved against this.
+ * It must match wherever the app is actually served, so it is derived from the
+ * environment rather than hardcoded — a wrong host here silently produces
+ * 404ing preview images.
+ *
+ * NEXT_PUBLIC_SITE_URL wins when set (use it once a custom domain exists);
+ * otherwise Vercel's own production or per-deployment host; localhost last.
+ */
+const siteUrl = (() => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+})();
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://smallfortune.money"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Small Fortune — your money, translated",
     template: "%s · Small Fortune",
