@@ -106,8 +106,15 @@ export function Converter({
 
   return (
     <div className="flex flex-col gap-7">
+      {/* These two z-indexes are load-bearing. `.rise` animates opacity and
+          transform with fill-mode `both`, so the animation stays in effect
+          forever and each section keeps a stacking context alive. Left at
+          `auto` they paint in DOM order, which puts Result on top and traps
+          the currency popover — its own z-50 cannot escape its parent's
+          context. Ordering the sections explicitly is what lets it open over
+          the result. */}
       <section
-        className="rise"
+        className="rise relative z-30"
         style={{ "--i": 1 } as React.CSSProperties}
         aria-label="Conversion"
       >
@@ -161,7 +168,7 @@ export function Converter({
       </section>
 
       <section
-        className="rise"
+        className="rise relative z-10"
         style={{ "--i": 2 } as React.CSSProperties}
         aria-live="polite"
         aria-label="Result"
